@@ -1,0 +1,5 @@
+hubspot_submission.hubspot_form_configs:
+  title: Hubspot Forms Configuration
+  parent: system.admin_config_system
+  route_name: hubspot_submission.hubspot_form_configs
+  weight: 10

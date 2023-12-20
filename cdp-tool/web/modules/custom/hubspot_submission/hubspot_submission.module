@@ -1,0 +1,75 @@
+<?php
+
+use Drupal\Core\Form\FormStateInterface;
+use GuzzleHttp\Exception\ClientException;
+
+/**
+ * Implements hook_form_alter().
+ */
+function hubspot_submission_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Get forms mapped with Hubspot forms.
+  if ($formsMapping = \Drupal::config('hubspot_submission.settings')->get('forms_mapping')) {
+    $formsMapping =  explode(PHP_EOL, $formsMapping);
+    foreach($formsMapping as $singleFormMapping) {
+      list($formGuid, $formId) = explode('|', $singleFormMapping);
+      
+      // Add custom submit handler to the form.
+      if ($formId == $form_id) {
+        $form_state->set('hubspot_form_guid', $formGuid);
+        $form['#submit'][] = '_custom_hubspot_submission';
+      }
+    }
+  }
+}
+
+/**
+ * Custom submit handler for Hubspot submissions.
+ */
+function _custom_hubspot_submission(&$form, FormStateInterface $form_state) {
+
+  if ($formGuid = $form_state->get('hubspot_form_guid')) {
+
+    $form_id = $form_state->getFormObject()->getFormId();
+    $formValues = $form_state->getValues();
+    $formattedFormValues = [];
+
+    // This can be made dynamic with field mapping.
+    // For now we are adding static mapping.
+    if ($form_id == 'bluestate_signup_form') {
+      $staticMapping = [
+        'email' => 'email',
+        'first_name' => 'firstname',
+        'last_name' => 'lastname',
+        'phone_number' => 'phone',
+      ];
+  
+      foreach ($formValues as $fieldKey => $fieldVal) {
+        if (isset($staticMapping[$fieldKey])) {
+          $formattedFormValues[] = [
+            'name' => $staticMapping[$fieldKey],
+            'value' => $fieldVal,
+          ];
+        }
+      }
+    }
+
+    if (!empty($formattedFormValues)) {
+      try {
+        $request = \Drupal::request();
+        $requestBody = [
+          'fields' => $formattedFormValues,
+          'context' => [
+            'ipAddress' => $request->getClientIp(),
+            'pageUri' => $request->headers->get('referer'),
+          ],
+        ];
+        $portalId = \Drupal::config('hubspot.settings')->get('hubspot_portal_id');
+        $hubspot = \Drupal::service('hubspot.hubspot');
+        $hubspot->getHubspotClient()->forms()->submit($portalId, $formGuid, $requestBody);
+      }
+      catch (ClientException $e) {
+        \Drupal::logger('hubspot_submission')->error($e->getMessage());
+      }
+    }
+  }
+}

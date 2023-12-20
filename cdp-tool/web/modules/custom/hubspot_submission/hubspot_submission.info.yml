@@ -1,0 +1,7 @@
+name: 'Hubspot Submission'
+description: 'Integrate Hubspot with Drupal to do the submissions'
+core_version_requirement: ^8 || ^9
+type: module
+package: 'Blue State'
+dependencies:
+  - hubspot:hubspot

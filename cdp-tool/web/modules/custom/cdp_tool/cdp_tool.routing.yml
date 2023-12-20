@@ -1,0 +1,7 @@
+cdp_tool.cdp_tool_select:
+  path: '/cdp-tool/cdp-tool-select'
+  defaults:
+    _title: 'CDP Tool Select'
+    _form: 'Drupal\cdp_tool\Form\CDPToolSelect'
+  requirements:
+    _permission: 'access content'

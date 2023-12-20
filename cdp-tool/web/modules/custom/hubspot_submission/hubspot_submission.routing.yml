@@ -1,0 +1,7 @@
+hubspot_submission.hubspot_form_configs:
+  path: '/admin/config/system/hubspot-form-configs'
+  defaults:
+    _title: 'Hubspot Forms Configuration'
+    _form: 'Drupal\hubspot_submission\Form\HubspotSubmissonConfigs'
+  requirements:
+    _permission: 'administer site configuration'

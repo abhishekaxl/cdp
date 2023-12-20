@@ -1,0 +1,12 @@
+name: 'HubSpot Webform integration'
+description: 'Provides HubSpot leads API integration with Webform and Drupal. Works with Hubspots OAuth 2 implementation'
+core_version_requirement: ^8.9 || ^9 || ^10
+type: module
+configure: hubspot.admin_settings
+dependencies:
+  - webform:webform
+
+# Information added by Drupal.org packaging script on 2023-10-26
+version: '3.0.0-alpha4'
+project: 'hubspot'
+datestamp: 1698354508

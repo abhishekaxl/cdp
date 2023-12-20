@@ -1,0 +1,8 @@
+# Schema for the configuration files of the Hubspot submission module.
+hubspot_submission.settings:
+  type: config_object
+  label: 'Hubspot submission settings'
+  mapping:
+    example:
+      type: string
+      label: 'Example'
