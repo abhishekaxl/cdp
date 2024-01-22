@@ -1,0 +1,10 @@
+hubspot_debug_on: 0
+tracking_code_on: 0
+_core:
+  default_config_hash: fx0XgKTG1g64CYD_zOFtlptJhp3djOVACHDk9-ZjfUM
+hubspot_portal_id: '557351'
+hubspot_client_id: e2cadf51-26f1-4f31-836d-f5d36b1361fe
+hubspot_client_secret: 047a8603-8c7e-4a9f-bf4a-834ae3c81797
+hubspot_scope: 'oauth forms crm.objects.contacts.read crm.objects.contacts.write crm.schemas.contacts.read crm.schemas.contacts.write'
+hubspot_debug_email: bhuvaneshwar.sharma@axelerant.com
+langcode: en-gb
